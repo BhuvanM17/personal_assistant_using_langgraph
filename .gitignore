@@ -1,0 +1,30 @@
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Google OAuth Credentials
+credentials.json
+token.json
+
+# Databases and Vector Stores
+data/
+*.db
+chroma_db/
+
+# Logs
+logs/
+*.log
+*.jsonl
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/

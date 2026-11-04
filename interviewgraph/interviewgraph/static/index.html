@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice Python and GenAI interviews with a transparent LangGraph workflow.">
+  <title>InterviewGraph · Practice with purpose</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-icon">ig</span><span>Interview<span class="brand-light">Graph</span></span></a>
+      <div class="sidebar-label">YOUR WORKSPACE</div>
+      <div class="nav-item selected"><span aria-hidden="true">◈</span> Practice studio <span class="nav-dot"></span></div>
+      <a class="nav-item" href="/docs" target="_blank" rel="noopener"><span aria-hidden="true">⌘</span> API explorer <span class="arrow">↗</span></a>
+      <div class="sidebar-card"><span class="tiny-tag">BUILT WITH LANGGRAPH</span><h3>A little better.<br>Every answer.</h3><p>Practice explaining your thinking, then turn feedback into your next attempt.</p><div class="mini-nodes"><i></i><b></b><i></i><b></b><i></i></div></div>
+      <div class="sidebar-footer"><span class="avatar">YOU</span><div>Personal practice<span>Local workspace</span></div></div>
+    </aside>
+    <main>
+      <header class="topbar"><span>Workspace <span class="slash">/</span> Practice studio</span><span class="mode-badge" id="mode-badge">Connecting…</span></header>
+      <div class="content">
+        <div class="intro"><div><p class="eyebrow">LESS MEMORIZING. MORE UNDERSTANDING.</p><h1>Your next interview<br>starts here<span class="lime-dot">.</span></h1><p class="intro-copy">Say it in your own words. Get feedback. Build confidence.</p></div><div class="session-count"><span>03</span><p>questions per session<br>one follow-up when you need it</p></div></div>
+        <div id="notice" class="notice" role="status">Loading evaluation mode…</div>
+        <div id="error" class="error hidden" role="alert"></div>
+        <details id="saved-draft" class="card hidden"><summary>Your unsubmitted answer is kept here</summary><textarea id="draft-answer" aria-label="Unsubmitted answer" readonly></textarea></details>
+        <section class="setup card" id="setup">
+          <div class="section-heading"><div><p class="eyebrow">01 / CHOOSE YOUR FOCUS</p><h2>What are we practicing?</h2></div><span class="muted">A focused session. A useful next step.</span></div>
+          <div class="topic-grid" role="group" aria-label="Interview topic">
+            <button class="topic active" data-topic="python" aria-pressed="true"><span class="topic-icon">Py</span><span class="topic-name">Python Backend</span><span class="topic-description">Functions, APIs & production thinking</span><span class="topic-bottom">3 questions <span>↗</span></span></button>
+            <button class="topic" data-topic="rag" aria-pressed="false"><span class="topic-icon purple">R</span><span class="topic-name">RAG Systems</span><span class="topic-description">Retrieval, grounding & permissions</span><span class="topic-bottom">3 questions <span>↗</span></span></button>
+            <button class="topic" data-topic="langgraph" aria-pressed="false"><span class="topic-icon blue">G</span><span class="topic-name">LangGraph</span><span class="topic-description">State, routing & conversation memory</span><span class="topic-bottom">3 questions <span>↗</span></span></button>
+          </div>
+          <div class="setup-bottom"><span class="muted">Your progress saves on this computer.</span><button id="start" class="button primary" disabled>Start practice <span>→</span></button></div>
+        </section>
+        <section class="interview hidden" id="interview" aria-label="Active interview">
+          <div class="practice-grid">
+            <div class="card answer-card"><div class="question-meta"><span class="eyebrow" id="question-label"></span><span class="question-tag" id="question-topic"></span></div><div class="progress-track"><div id="progress"></div></div><h2 id="question" tabindex="-1"></h2><label class="answer-label" for="answer">YOUR ANSWER</label><textarea id="answer" maxlength="8000" rows="8" placeholder="Explain your approach as if you were talking to an interviewer…"></textarea><div class="answer-bottom"><span class="muted" id="word-count">0 words</span><button class="button primary" id="submit">Review my answer <span>→</span></button></div><p class="privacy">Gemini mode sends the question and your answer to Google. Keep confidential details out of practice answers.</p></div>
+            <aside class="card coach-card"><p class="eyebrow">YOUR COACH'S NOTES</p><div id="empty-feedback"><span class="feedback-symbol">✳</span><h3>Make your thinking visible.</h3><p>Start with the idea, explain how it works, and add one concrete example.</p><div class="tip">You don't need a perfect answer.<br>You need a place to start.</div></div><div id="feedback" class="hidden" aria-live="polite"><div class="score-line"><span id="score"></span><span>/ 10<br><small id="score-label">coverage</small></span></div><p id="feedback-text"></p><h4>WHAT WORKED</h4><ul id="strengths"></ul><h4>TRY ADDING</h4><ul id="gaps"></ul><details><summary>See reference answer</summary><p id="reference"></p></details></div></aside>
+          </div>
+        </section>
+        <section id="finished" class="card finished hidden" aria-live="polite"><span class="completion-icon">✓</span><p class="eyebrow">SESSION COMPLETE</p><h2>That's one more step forward.</h2><p id="final-score"></p><p>Review your answers below. Then try explaining the concepts out loud.</p><div class="finish-actions"><button class="button primary" id="again">Practice another topic →</button><a class="button secondary" id="download" href="#">Download report ↓</a></div></section>
+        <section class="card workflow"><div class="section-heading"><div><p class="eyebrow">UNDER THE HOOD</p><h2>A workflow you can follow.</h2></div><span class="live-label"><i></i> Real LangGraph execution</span></div><div class="graph-view"><span class="graph-node" data-node="evaluate">Evaluate answer</span><span class="graph-arrow">→</span><div class="graph-branches"><span class="graph-node" data-node="follow_up">Ask a follow-up <small>score &lt; 7 · first attempt</small></span><span class="graph-node" data-node="advance">Next question <small>ready to move on</small></span><span class="graph-node" data-node="finish">Finish session <small>last question reviewed</small></span></div></div><p class="graph-caption" id="trace-caption">Submit an answer to see the nodes your session visits.</p></section>
+        <section class="card history hidden" id="history-section"><div class="section-heading"><div><p class="eyebrow">YOUR SESSION</p><h2>Progress, one answer at a time.</h2></div><a id="history-report" href="#">Download notes ↓</a></div><div id="history"></div></section>
+        <footer>InterviewGraph <span>Python · FastAPI · LangGraph · LangChain</span></footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

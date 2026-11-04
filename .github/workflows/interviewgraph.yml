@@ -1,0 +1,29 @@
+name: InterviewGraph tests
+on:
+  push:
+    branches: [feature/interviewgraph-20261104]
+    paths: ['interviewgraph/**', '.github/workflows/interviewgraph.yml']
+  pull_request:
+    paths: ['interviewgraph/**', '.github/workflows/interviewgraph.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12']
+    defaults:
+      run:
+        working-directory: interviewgraph
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: interviewgraph/requirements*.txt
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest -q
+      - run: python -m compileall -q interviewgraph
+      - run: node --check interviewgraph/static/app.js
